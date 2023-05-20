@@ -1,13 +1,10 @@
 class BlogPostsController < ApplicationController
-  before_action :set_blog_post, only: [:show, :edit, :update]
+  before_action :set_blog_post, only: [:show, :edit, :update, :destroy]
   def index
     @blog_posts = BlogPost.all
   end
 
-  def show
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path
-  end
+  def show; end
 
   def new
     @blog_post = BlogPost.new
@@ -32,6 +29,11 @@ class BlogPostsController < ApplicationController
     end
   end
 
+  def destroy
+    @blog_post.destroy
+    redirect_to root_path
+  end
+
 
   private
 
@@ -41,6 +43,8 @@ class BlogPostsController < ApplicationController
 
   def set_blog_post
     @blog_post = BlogPost.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
   end
 
 end
